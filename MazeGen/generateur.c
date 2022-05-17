@@ -202,12 +202,13 @@ void printMaze(Maze* maze)
 	{
 		for (int x = 0; x < maze->size.x; x++)
 		{
-			char chr = ' ';
-			if (maze->data[x][y] == 1) chr = '@';
-			else if (maze->data[x][y] == -2) chr = 'O';
-			else chr = ' ';
-			printf("%c ", chr);
-			//printf("%4d ", maze->data[x][y]);
+			//char chr = ' ';
+			//if (maze->data[x][y] == 1) chr = '@';
+			//else if (maze->data[x][y] == -2) chr = 'O';
+			//else if (maze->data[x][y] == -3) chr = '*';
+			//else chr = ' ';
+			//printf("%c ", chr);
+			printf("%4d ", maze->data[x][y]);
 		}
 		printf("\n");
 	}
@@ -362,7 +363,7 @@ int solveMaze(Maze* maze)
 			printMaze(maze);
 		}
 
-		if (countNeighbors(maze, pos) == 0)
+		if (countNeighbors(maze, pos) == 0 && pos.x != maze->exit.x && pos.y != maze->exit.y)
 		{
 			//maze->data[pos.x][pos.y] = 0; // On retourne en arrière
 			pull(visited, &pos);
@@ -374,13 +375,19 @@ int solveMaze(Maze* maze)
 		//	break;
 	}
 
-	for (int y = 1; y < maze->size.y - 1; y++)
+	for (int i = 0; i < visited->eltsCount; i++)
 	{
-		for (int x = 1; x < maze->size.x - 1; x++)
-		{
-			if (maze->data[x][y] != 1 && maze->data[x][y] != -2)
-				maze->data[x][y] = 0;
-		}
+		peek(visited, &pos);
+		printf("(%d, %d)\n", pos.x, pos.y);
 	}
+
+	//for (int y = 1; y < maze->size.y - 1; y++)
+	//{
+	//	for (int x = 1; x < maze->size.x - 1; x++)
+	//	{
+	//		if (maze->data[x][y] != 1 && maze->data[x][y] != -3)
+	//			maze->data[x][y] = 0;
+	//	}
+	//}
 	return SUCCESS;
 }
