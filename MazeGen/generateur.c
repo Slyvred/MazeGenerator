@@ -320,6 +320,7 @@ int solveMaze(Maze* maze)
 
 	maze->data[maze->entry.x][maze->entry.y] = -2;//calcDist(maze->entry, maze->exit);
 
+	// Chaque cellule contient sa distance par rapport à la sortie
 	for (int y = 1; y < maze->size.y - 1; y++)
 	{
 		for (int x = 1; x < maze->size.x - 1; x++)
@@ -330,7 +331,8 @@ int solveMaze(Maze* maze)
 	}
 	//printMaze(maze);
 
-	for (int i = 0; i < maze->size.x * maze->size.y; i++)
+	while (pos.x != maze->exit.x || pos.y != maze->exit.y)
+	//for (int i = 0; i < maze->size.x * maze->size.y; i++)
 	{
 		int neighbors[4];
 		neighbors[DIR_UP] = getNeighbor(maze, pos, DIR_UP);
@@ -359,15 +361,15 @@ int solveMaze(Maze* maze)
 		{
 			maze->data[pos.x][pos.y] = -2; // On marque la cellule comme visitée
 			push(visited, pos); // On ajoute ses coordonnées dans la pile
-			//printf("--> (%d, %d)\n", pos.x, pos.y);
 			oldPos = pos;
+			//printf("--> (%d, %d)\n", pos.x, pos.y);
+			system("cls");
 			printMaze(maze);
 		}
 
 		// Backtracking
 		if (countNeighbors(maze, pos) == 0 && pos.x != maze->exit.x && pos.y != maze->exit.y)
 		{
-			//maze->data[pos.x][pos.y] = 0; // On retourne en arrière
 			pull(visited, &pos);
 			oldPos = pos;
 			//printf("%s\n", "No more neighbors: pulling from stack");
