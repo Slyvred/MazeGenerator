@@ -11,8 +11,6 @@ int main()
 	Vec2 size = { 11, 11 };
 	maze = genMaze(maze, size, DIFF_HARD);
 	printMaze(maze);
-	printf("\n");
 	solveMaze(maze);
-	printf("\n");
 	printMaze(maze);
 }
